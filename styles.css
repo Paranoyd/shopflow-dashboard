@@ -238,7 +238,6 @@ body {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
-
 .sf-btn {
   background: var(--cor-fundo);
   border: 1px solid var(--cor-primaria);
@@ -359,85 +358,4 @@ body {
     text-align: center;
 }
 .sf-header__info { align-items: center; }
-}
-/* ── 13. Cartões de produto (adicionado na Sessão 3) ── */
- 
-.sf-produto-cartao {
-  background: var(--cor-fundo);
-  border-radius: 8px;
-  padding: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.5rem;
-  border-left: 3px solid var(--cor-primaria);
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-
-.sf-produto-cartao:hover {
-  transform: translateX(3px);
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-}
-
-.sf-produto-cartao--esgotado {
-  border-left-color: #BDBDBD;
-  opacity: 0.6;
-}
-
-.sf-produto-info {
-  flex: 1;
-}
-
-.sf-produto-nome {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--cor-texto);
-  margin-bottom: 0.2rem;
-}
-
-.sf-produto-categoria {
-  font-size: 0.72rem;
-  color: var(--cor-primaria);
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.sf-produto-direita {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  align-items: flex-end;
-}
-
-.sf-produto-preco {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--cor-texto);
-}
-
-.sf-produto-stock {
-  font-size: 0.75rem;
-  padding: 2px 7px;
-  border-radius: 10px;
-  font-weight: 600;
-}
-
-.sf-produto-stock--ok       { background: #E8F5E9; color: #2E7D32; }
-.sf-produto-stock--baixo    { background: #FFF3E0; color: #E65100; }
-.sf-produto-stock--esgotado { background: #FFEBEE; color: #C62828; }
-
-/* Mensagem quando não há produtos na categoria */
-.sf-sem-produtos {
-  text-align: center;
-  padding: 2rem 1rem;
-  color: var(--cor-texto-suave);
-  font-size: 0.9rem;
-}
-.sf-select {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--cor-texto);
-    margin-bottom: 0.2rem;
 }

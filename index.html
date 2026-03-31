@@ -20,9 +20,8 @@
         <div class="sf-header__info">
             <span id="relogio" class="sf-relogio">--:--:--</span>
             <span id="data-hoje" class="sf-data">--/--/----</span>
-            <span id="estaAberta" class="estaAberta"></span>
+            <button id="btn-tema" class="sf-btn">Modo Escuro</button>
         </div>
-        <button id="btn-tema">Modo Escuro</button>
     </header>
  
     <!-- ═══ GRELHA PRINCIPAL ═══ -->
@@ -35,21 +34,10 @@
                 <span class="sf-badge" id="badge-stock">0 produtos</span>
             </div>
             <div class="sf-painel__filtros">
-                <button class="sf-btn sf-btn--activo" data-categoria="todos">Todos</button>
+                <button class="sf-btn" data-categoria="todos">Todos</button>
                 <button class="sf-btn" data-categoria="Portáteis">Portáteis</button>
                 <button class="sf-btn" data-categoria="Periféricos">Periféricos</button>
-                <button class="sf-btn" data-categoria="Monitores">Monitores</button>
-                <button class="sf-btn" data-categoria="Acessórios">Acessórios</button>
-                <!--// Estrutura do elemento HTML a adicionar:-->
-                <!--ADICIONAR BOTÃO DE ORGANIZAR -->
-                <!--<select id="ordenacao" class="sf-select">
-                    <option value="nome">Nome (A-Z)</option>
-                    <option value="preco-asc">Preço (menor primeiro)</option>
-                    <option value="preco-desc">Preço (maior primeiro)</option>
-                    <option value="stock">Stock (maior primeiro)</option>
-                </select>-->
             </div>
-            
             <div id="lista-produtos" class="sf-lista-produtos">
                 <p class="sf-placeholder">A carregar produtos...</p>
             </div>
