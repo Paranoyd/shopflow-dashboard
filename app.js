@@ -329,7 +329,7 @@ function ordenarProdutos(tipo) {
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
 
 // Criar uma ligação WebSocket
-const ws = new WebSocket('wss://shopflow-servidor-ivqj.onrender.com/');
+//const ws = new WebSocket('wss://shopflow-servidor-ivqj.onrender.com/');
 //                        ^^^                                  
 //                        wss:// = WebSocket Secure (como https)
  
