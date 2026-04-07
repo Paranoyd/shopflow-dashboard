@@ -130,17 +130,17 @@ function estaAberta() {
   return diaUtil && horario;
 }
 // Com .then() encadeados (funciona, mas fica difícil de ler)
-fetch('data/produtos.json')
-    .then(r => r.json())
-    .then(dados => mostrarProdutos(dados))
-    .catch(e => console.error(e));
+//fetch('data/produtos.json')
+//    .then(r => r.json())
+//    .then(dados => mostrarProdutos(dados))
+//    .catch(e => console.error(e));
  
 // Com async/await (mais limpo — é o que vamos usar)
 async function carregarProdutos() {
     try {
         const resposta = await fetch('data/produtos.json');
         const dados = await resposta.json();
-        mostrarProdutos(dados);
+        //mostrarProdutos(dados);
     } catch (erro) {
         console.error('Erro ao carregar produtos:', erro);
     }
@@ -286,16 +286,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // Devolver negativo = a vem antes de b
 // Devolver positivo = b vem antes de a
 // Devolver zero = ordem indiferente-->
-produtos.sort((a, b) => a.preco - b.preco);  // Preço crescente
-produtos.sort((a, b) => b.preco - a.preco);  // Preço decrescente
-produtos.sort((a, b) => a.nome.localeCompare(b.nome));  // Nome A-Z
-produtos.sort((a, b) => b.stock - a.stock);  // Stock decrescente
+//produtos.sort((a, b) => a.preco - b.preco);  // Preço crescente
+//produtos.sort((a, b) => b.preco - a.preco);  // Preço decrescente
+//produtos.sort((a, b) => a.nome.localeCompare(b.nome));  // Nome A-Z
+//produtos.sort((a, b) => b.stock - a.stock);  // Stock decrescente
 // Dicas de JavaScript para calcular as estatísticas:
-const selectOrdenacao = document.getElementById("ordenacao");
+//const selectOrdenacao = document.getElementById("ordenacao");
 
-selectOrdenacao.addEventListener("change", function () {
-  ordenarProdutos(this.value);
-});
+//selectOrdenacao.addEventListener("change", function () {
+//  ordenarProdutos(this.value);
+//});
 function ordenarProdutos(tipo) {
   switch (tipo) {
     case "nome":
@@ -313,18 +313,18 @@ function ordenarProdutos(tipo) {
       produtos.sort((a, b) => b.stock - a.stock);
       break;
   }
-  mostrarProdutos(lista);
+//  mostrarProdutos(lista);
 }
 
-mostrarProdutos(lista);
+//mostrarProdutos(lista);
 // Número de esgotados
-const esgotados = produtos.filter(p => p.stock === 0).length;
+//const esgotados = produtos.filter(p => p.stock === 0).length;
  
 // Valor total do stock
-const valorTotal = produtos.reduce((soma, p) => soma + (p.preco * p.stock), 0);
+//const valorTotal = produtos.reduce((soma, p) => soma + (p.preco * p.stock), 0);
  
 // Formatar como moeda (reutilizar a função da Sessão 2)
-formatarMoeda(valorTotal); // ex: '45.678,90 EUR'
+//formatarMoeda(valorTotal); // ex: '45.678,90 EUR'
 
 // Criar uma ligação WebSocket
 const ws = new WebSocket('wss://shopflow-servidor-ivqj.onrender.com/');
