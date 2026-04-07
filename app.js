@@ -325,3 +325,194 @@ const valorTotal = produtos.reduce((soma, p) => soma + (p.preco * p.stock), 0);
  
 // Formatar como moeda (reutilizar a função da Sessão 2)
 formatarMoeda(valorTotal); // ex: '45.678,90 EUR'
+
+// Criar uma ligação WebSocket
+const ws = new WebSocket('wss://shopflow-servidor-ivqj.onrender.com/');
+//                        ^^^                                  
+//                        wss:// = WebSocket Secure (como https)
+ 
+// Reagir aos eventos
+ws.onopen    = () => console.log('Ligado ao servidor');
+ws.onmessage = (evento) => console.log('Mensagem:', evento.data);
+ws.onerror   = (erro)   => console.error('Erro WebSocket:', erro);
+ws.onclose   = () => console.log('Ligação fechada');
+ 
+// Enviar uma mensagem ao servidor (se necessário)
+ws.send('Olá servidor!');
+ 
+// Fechar a ligação
+ws.close();
+
+// No servidor (Node.js) — estrutura básica com a biblioteca ws
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+ 
+// Quando um cliente se liga
+wss.on('connection', (ws) => {
+    console.log('Novo cliente ligado');
+ 
+    // Enviar uma mensagem ao cliente
+    ws.send(JSON.stringify({ tipo: 'bem-vindo', mensagem: 'Ligado!' }));
+ 
+    // Receber mensagens do cliente
+    ws.on('message', (dados) => {
+        console.log('Cliente enviou:', dados.toString());
+    });
+ 
+    // Quando o cliente se desliga
+    ws.on('close', () => {
+        console.log('Cliente desligado');
+    });
+});
+// Confirmar que o objecto ShopFlow tem esta estrutura
+// (já existe do app.js da Sessão 2 — não duplicar)
+ligacoes: {
+  websocket: null,   // Será preenchido pela função ligarWebSocket()
+  mqtt; null         // Sessão 7
+};
+// ── Painel de Vendas em Tempo Real ───────────────────
+ 
+/**
+ * Actualiza os contadores de encomendas e receita.
+ * @param {number} totalVendido - Valor da venda a adicionar
+ */
+function actualizarContadores(totalVendido) {
+  ShopFlow.dados.totalVendas  += 1;
+  ShopFlow.dados.totalReceita += totalVendido;
+
+  const elemVendas  = document.getElementById('total-vendas');
+  const elemReceita = document.getElementById('total-receita');
+
+  if (elemVendas)  elemVendas.textContent  = ShopFlow.dados.totalVendas;
+  if (elemReceita) elemReceita.textContent  = formatarMoeda(ShopFlow.dados.totalReceita);
+}
+
+/**
+* Adiciona uma nova venda ao feed, no topo da lista.
+* Mantém no máximo 20 itens visíveis.
+* @param {Object} venda - Dados da venda recebidos do servidor
+*/
+function adicionarAoFeed(venda) {
+  const feed = document.getElementById('feed-vendas');
+
+  // Remover o placeholder se ainda existir
+  const placeholder = feed.querySelector('.sf-placeholder');
+  if (placeholder) placeholder.remove();
+
+  // Criar o elemento da venda
+  const item = document.createElement('div');
+  item.className = 'sf-feed-item';
+  item.innerHTML = `
+      <span class="sf-feed-produto">${venda.produto}</span>
+      <span class="sf-feed-local">${venda.localidade} &bull; ${venda.hora}</span>
+      <span class="sf-feed-valor">${formatarMoeda(venda.total)}</span>
+  `;
+
+  // Inserir no topo (antes do primeiro filho)
+  feed.insertBefore(item, feed.firstChild);
+
+  // Limitar a 20 itens para não sobrecarregar o DOM
+  const itens = feed.querySelectorAll('.sf-feed-item');
+  if (itens.length > 20) {
+      itens[itens.length - 1].remove();
+  }
+
+  // Animar a barra de actividade WebSocket
+  const barra = document.getElementById('ws-barra');
+  if (barra) {
+    barra.classList.remove('sf-ws-barra--activa');
+    void barra.offsetWidth; // Forçar re-render para reiniciar animação
+    barra.classList.add('sf-ws-barra--activa');
+}
+}
+
+/**
+* Actualiza o indicador de estado da ligação WebSocket.
+* @param {'online'|'offline'} estado
+*/
+function actualizarIndicadorWS(estado) {
+const indicador = document.getElementById('indicador-ws');
+if (!indicador) return;
+
+if (estado === 'online') {
+    indicador.textContent = 'Online';
+    indicador.className   = 'sf-indicador sf-indicador--online';
+} else {
+    indicador.textContent = 'Desligado';
+    indicador.className   = 'sf-indicador sf-indicador--offline';
+}
+}
+/**
+ * Estabelece e gere a ligação WebSocket ao servidor ShopFlow.
+ * Implementa reconexão automática com backoff exponencial.
+ */
+function ligarWebSocket() {
+  // IMPORTANTE: Substituir pelo URL do vosso serviço no Render
+  const URL_SERVIDOR = 'wss://shopflow-servidor-ivqj.onrender.com/';
+
+  console.log('A ligar ao servidor WebSocket...');
+
+  try {
+      ShopFlow.ligacoes.websocket = new WebSocket(URL_SERVIDOR);
+  } catch (e) {
+      console.error('Não foi possível criar WebSocket:', e);
+      return;
+  }
+
+  const ws = ShopFlow.ligacoes.websocket;
+
+  // ── Ligação estabelecida ──
+  ws.onopen = () => {
+      console.log('WebSocket ligado ao servidor ShopFlow');
+      actualizarIndicadorWS('online');
+      ShopFlow.reconexoes = 0; // Resetar contador de reconexões
+  };
+
+  // ── Mensagem recebida do servidor ──
+  ws.onmessage = (evento) => {
+      try {
+          const mensagem = JSON.parse(evento.data);
+ 
+          if (mensagem.tipo === 'venda') {
+            // Processar venda: actualizar contadores e feed
+            actualizarContadores(mensagem.total);
+            adicionarAoFeed(mensagem);
+
+        } else if (mensagem.tipo === 'ligado') {
+            console.log('Servidor:', mensagem.mensagem);
+        }
+
+    } catch (e) {
+        console.error('Erro ao processar mensagem:', e);
+    }
+};
+
+// ── Erro na ligação ──
+ws.onerror = (erro) => {
+    console.error('Erro WebSocket — verifique se o servidor está activo');
+    actualizarIndicadorWS('offline');
+};
+
+// ── Ligação fechada — tentar reconectar ──
+ws.onclose = (evento) => {
+    console.log(`WebSocket fechado (código: ${evento.code})`);
+    actualizarIndicadorWS('offline');
+
+    // Reconexão automática após 5 segundos
+    if (!ShopFlow.reconectar) return; // Não reconectar se foi fechado intencionalmente
+    console.log('A reconectar em 5 segundos...');
+    setTimeout(ligarWebSocket, 5000);
+};
+}
+document.addEventListener('DOMContentLoaded', () => {
+  console.log(`ShopFlow Dashboard v${ShopFlow.versao} iniciado`);
+
+  const primeiroBotao = document.querySelector('.sf-btn');
+  if (primeiroBotao) primeiroBotao.classList.add('sf-btn--activo');
+
+  carregarProdutos();  // Sessão 3
+
+  // NOVO (Sessão 4): Ligar ao servidor WebSocket
+  ShopFlow.reconectar = true;  // Permitir reconexão automática
+  ligarWebSocket();
+});
