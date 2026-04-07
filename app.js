@@ -326,6 +326,8 @@ function ordenarProdutos(tipo) {
 // Formatar como moeda (reutilizar a função da Sessão 2)
 //formatarMoeda(valorTotal); // ex: '45.678,90 EUR'
 
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
+
 // Criar uma ligação WebSocket
 const ws = new WebSocket('wss://shopflow-servidor-ivqj.onrender.com/');
 //                        ^^^                                  
@@ -366,10 +368,10 @@ wss.on('connection', (ws) => {
 });
 // Confirmar que o objecto ShopFlow tem esta estrutura
 // (já existe do app.js da Sessão 2 — não duplicar)
-ligacoes: {
-  websocket: null,   // Será preenchido pela função ligarWebSocket()
-  mqtt; null         // Sessão 7
-};
+//ligacoes: {
+//  websocket: null,   // Será preenchido pela função ligarWebSocket()
+//  mqtt; null         // Sessão 7
+//};
 // ── Painel de Vendas em Tempo Real ───────────────────
  
 /**
