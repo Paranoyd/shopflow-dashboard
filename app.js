@@ -198,7 +198,7 @@ async function actualizarPainelMeteo() {
                   <span>Pressão</span><span>${d.main.pressure} hPa</span>
               </div>
           </div>
-          <div class="sf-meteo-actualizado">Actualizado às ${hora}</div>`
+          <div class="sf-meteo-actualizado">Actualizado às ${hora}</div>`;
   } catch (erro) {
       console.error('Erro meteorologia:', erro);
       painel.innerHTML = `<div class="sf-api-erro">
