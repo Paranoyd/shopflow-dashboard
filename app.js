@@ -67,6 +67,9 @@ document.querySelectorAll('.sf-btn').forEach(btn => {
 });
 
 // ── VENDAS ──
+function formatarMoeda(cents) {
+  return (cents / 100).toFixed(2) + ' €';
+}
 function actualizarContadores(valorVenda) {
 
   // converter para cêntimos
@@ -75,11 +78,9 @@ function actualizarContadores(valorVenda) {
   ShopFlow.dados.totalVendas++;
   ShopFlow.dados.totalReceita += valorCentimos;
 
-  document.getElementById('total-vendas').textContent =
-      ShopFlow.dados.totalVendas;
+  document.getElementById('total-vendas').textContent = ShopFlow.dados.totalVendas;
 
-  document.getElementById('total-receita').textContent =
-      formatarMoeda(ShopFlow.dados.totalReceita);
+  document.getElementById('total-receita').textContent = formatarMoeda(ShopFlow.dados.totalReceita);
 }
 
 function adicionarFeed(venda) {
