@@ -1,1 +1,9 @@
-node_modules
+# Chaves de API — NUNCA enviar para o GitHub
+config.js
+ 
+# Dependências Node.js
+node_modules/
+ 
+# Ficheiros temporários do sistema
+.DS_Store
+Thumbs.db
