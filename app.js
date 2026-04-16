@@ -206,3 +206,4 @@ async function actualizarPainelMeteo() {
           Verifique a chave API em config.js.</div>`;
   }
 }
+actualizarPainelMeteo();
