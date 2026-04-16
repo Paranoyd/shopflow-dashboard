@@ -9,6 +9,7 @@
 
 <body>
 
+<!-- HEADER -->
 <header class="sf-header">
     <div class="sf-header__logo">
         <span class="sf-logo-icon">SF</span>
@@ -19,19 +20,17 @@
     </div>
 
     <div class="sf-header__info">
-        <span id="relogio" class="sf-relogio">--:--:--</span>
-        <span id="data-hoje" class="sf-data">--/--/----</span>
+        <span id="relogio">--:--:--</span>
+        <span id="data-hoje">--/--/----</span>
     </div>
 </header>
 
+<!-- GRID -->
 <main class="sf-grid">
 
     <!-- STOCK -->
     <section class="sf-painel sf-painel--stock">
-        <div class="sf-painel__cabecalho">
-            <h2>Stock</h2>
-            <span id="badge-stock" class="sf-badge">0 produtos</span>
-        </div>
+        <h2>Stock</h2>
 
         <div class="sf-painel__filtros">
             <button class="sf-btn sf-btn--activo" data-categoria="todos">Todos</button>
@@ -41,38 +40,80 @@
             <button class="sf-btn" data-categoria="Acessórios">Acessórios</button>
         </div>
 
-        <div id="lista-produtos" class="sf-lista-produtos">
-            <p class="sf-placeholder">A carregar produtos...</p>
+        <div id="lista-produtos">
+            <p>A carregar produtos...</p>
         </div>
     </section>
 
     <!-- VENDAS -->
     <section class="sf-painel">
-        <div class="sf-painel__cabecalho">
-            <h2>Vendas</h2>
-            <span id="indicador-ws" class="sf-indicador sf-indicador--offline">Desligado</span>
+        <h2>Vendas Tempo Real</h2>
+
+        <span id="indicador-ws" class="sf-indicador sf-indicador--offline">
+            Desligado
+        </span>
+
+        <div>
+            <p>Total vendas: <span id="total-vendas">0</span></p>
+            <p>Receita: <span id="total-receita">0 €</span></p>
         </div>
 
-        <div class="sf-vendas-contador">
-            <div class="sf-metrica">
-                <span id="total-vendas">0</span>
-                <span>Encomendas</span>
-            </div>
-            <div class="sf-metrica">
-                <span id="total-receita">0 €</span>
-                <span>Receita</span>
-            </div>
+        <div id="ws-barra"></div>
+
+        <div id="feed-vendas">
+            <p>A aguardar vendas...</p>
+        </div>
+    </section>
+
+    <!-- METEOROLOGIA -->
+    <section class="sf-painel">
+        <h2>Meteorologia</h2>
+        <div id="meteo-conteudo">
+            <p>API ligada na Sessão 5</p>
+        </div>
+    </section>
+
+    <!-- CÂMBIOS -->
+    <section class="sf-painel">
+        <h2>Câmbios EUR/USD</h2>
+        <div id="cambios-conteudo">
+            <p>API ligada na Sessão 5</p>
+        </div>
+    </section>
+
+    <!-- IOT -->
+    <section class="sf-painel">
+        <h2>Armazém IoT</h2>
+        <span class="sf-indicador sf-indicador--offline">Desligado</span>
+
+        <div id="iot-conteudo">
+            <p>MQTT na Sessão 7</p>
+        </div>
+    </section>
+
+    <!-- GRÁFICO -->
+    <section class="sf-painel">
+        <h2>Vendas por Hora</h2>
+        <div id="grafico-conteudo">
+            <p>Chart.js na Sessão 8</p>
+        </div>
+    </section>
+
+    <!-- CHATBOT -->
+    <section class="sf-painel">
+        <h2>Assistente IA</h2>
+
+        <div id="chat-mensagens">
+            <p>Assistente disponível na Sessão 8</p>
         </div>
 
-        <div id="ws-barra" class="sf-ws-barra"></div>
-
-        <div id="feed-vendas" class="sf-feed">
-            <p class="sf-placeholder">Aguarda ligação...</p>
-        </div>
+        <input type="text" placeholder="Escreve..." disabled>
+        <button disabled>Enviar</button>
     </section>
 
 </main>
 
 <script src="app.js"></script>
+
 </body>
 </html>
