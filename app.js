@@ -67,12 +67,19 @@ document.querySelectorAll('.sf-btn').forEach(btn => {
 });
 
 // ── VENDAS ──
-function actualizarContadores(valor) {
-  ShopFlow.dados.totalVendas++;
-  ShopFlow.dados.totalReceita += valor;
+function actualizarContadores(valorVenda) {
 
-  document.getElementById('total-vendas').textContent = ShopFlow.dados.totalVendas;
-  document.getElementById('total-receita').textContent = ShopFlow.dados.totalReceita + ' €';
+  // converter para cêntimos
+  const valorCentimos = Math.round(valorVenda * 100);
+
+  ShopFlow.dados.totalVendas++;
+  ShopFlow.dados.totalReceita += valorCentimos;
+
+  document.getElementById('total-vendas').textContent =
+      ShopFlow.dados.totalVendas;
+
+  document.getElementById('total-receita').textContent =
+      formatarMoeda(ShopFlow.dados.totalReceita);
 }
 
 function adicionarFeed(venda) {
