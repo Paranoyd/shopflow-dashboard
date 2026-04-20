@@ -121,16 +121,23 @@ function ligarWebSocket() {
 
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
-  iniciarRelogio();
-  carregarProdutos();
-  ligarWebSocket();
-  // NOVO — Sessão 5: APIs externas
-  actualizarPainelMeteo();
-  actualizarPainelCambios();
-  // Actualização periódica automática
-  setInterval(actualizarPainelMeteo,   CONFIG.INTERVALO_METEO);
-  setInterval(actualizarPainelCambios, CONFIG.INTERVALO_CAMBIOS);
+    console.log(`ShopFlow Dashboard v${ShopFlow.versao} iniciado`);
+ 
+    const primeiroBotao = document.querySelector('.sf-btn');
+    if (primeiroBotao) primeiroBotao.classList.add('sf-btn--activo');
+ 
+    // carregarProdutos() — já não é necessário, o React faz o fetch
+ 
+    ShopFlow.reconectar = true;
+    iniciarRelogio();
+    ligarWebSocket();            // Sessão 4 — mantém-se
+ 
+    actualizarPainelMeteo();     // Sessão 5 — mantém-se
+    actualizarPainelCambios();   // Sessão 5 — mantém-se
+    setInterval(actualizarPainelMeteo,   CONFIG.INTERVALO_METEO);
+    setInterval(actualizarPainelCambios, CONFIG.INTERVALO_CAMBIOS);
 });
+
 
 // ── Painel de Meteorologia ───────────────────────────
  
@@ -220,7 +227,6 @@ async function actualizarPainelMeteo() {
           Verifique a chave API em config.js.</div>`;
   }
 }
-actualizarPainelMeteo();
 
 // ── Painel de Câmbios ────────────────────────────────
  
